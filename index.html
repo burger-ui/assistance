@@ -1,0 +1,3777 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daegu Assistance</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --pink: #E88AB8;
+      --pink-light: #F0C0E1;
+      --pink-deep: #B54B87;
+      /* Semantic aliases for easier theming */
+      --primary: var(--pink);
+      --primary-light: var(--pink-light);
+      --primary-deep: var(--pink-deep);
+      --dark: #1A1220;
+      --dark2: #22162F;
+      --dark3: #2E203F;
+      --dark4: #392B50;
+      --bg-dark: var(--dark);
+      --bg-dark-2: var(--dark2);
+      --white: #F9F1F7;
+      --muted: #C8B2C8;
+      --accent: #FF79C6;
+      --bg: var(--dark);
+      --bg2: var(--dark2);
+      --bg3: var(--dark3);
+      --bg4: var(--dark4);
+      --text: var(--white);
+      --text-muted: var(--muted);
+      --border: rgba(232, 138, 182, 0.15);
+      --border2: rgba(232, 138, 182, 0.25);
+    }
+
+    [data-theme="light"] {
+      --bg: #FFF5FC;
+      --bg2: #FDE8F4;
+      --bg3: #F5D5EB;
+      --bg4: #EBC2DF;
+      --text: #2A1020;
+      --text-muted: #7A4A6A;
+      --border: rgba(181, 75, 135, 0.2);
+      --border2: rgba(181, 75, 135, 0.35);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--pink-deep);
+      border-radius: 3px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(26, 18, 32, 0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    [data-theme="light"] nav {
+      background: rgba(255, 245, 252, 0.9);
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .logo-img {
+      height: 38px;
+      width: auto;
+      vertical-align: middle;
+      margin-right: 0.6rem;
+      display: inline-block;
+    }
+    .logo span {
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.6rem;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+    .nav-btn {
+      background: var(--primary);
+      color: var(--dark);
+      border: none;
+      padding: 0.5rem 1.3rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 3px;
+    }
+
+    .nav-btn:hover {
+      background: var(--primary-light);
+    }
+
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text-muted);
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      font-size: 1.35rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      padding: 0;
+    }
+
+    .nav-toggle:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 450;
+      background: rgba(26, 18, 32, 0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav-inner {
+      width: min(100%, 420px);
+      max-width: 420px;
+      max-height: calc(100vh - 2rem);
+      margin: auto;
+      overflow-y: auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem;
+      position: relative;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.25);
+    }
+
+    .mobile-nav-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .mobile-nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .mobile-nav-links a {
+      display: block;
+      padding: 0.95rem 1rem;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 12px;
+      background: rgba(232, 138, 182, 0.08);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a.active {
+      background: rgba(232, 138, 182, 0.18);
+      color: var(--pink);
+    }
+
+    .mobile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .mobile-actions .nav-btn {
+      width: 100%;
+    }
+
+    /* SEARCH OVERLAY */
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(26, 18, 32, 0.95);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 120px;
+    }
+
+    .search-overlay.open {
+      display: flex;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 600px;
+      padding: 0 2rem;
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--pink);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.1rem;
+      padding: 1rem 1.5rem;
+      outline: none;
+      border-radius: 4px;
+    }
+
+    .search-input-wrap input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-close {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .search-results {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .search-result-item {
+      padding: 0.8rem 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: border-color 0.2s;
+      border-radius: 3px;
+    }
+
+    .search-result-item:hover {
+      border-color: var(--pink);
+    }
+
+    .search-result-item .sr-page {
+      font-size: 0.7rem;
+      color: var(--pink);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
+    }
+
+    /* PAGES */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-top: 70px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* SECTION COMMONS */
+    section {
+      padding: 5rem 3rem;
+    }
+
+    .section-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    .btn-primary {
+      background: var(--pink);
+      color: var(--dark);
+      border: none;
+      padding: 0.85rem 2.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 3px;
+    }
+
+    .btn-primary:hover {
+      background: var(--pink-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(249, 241, 247, 0.3);
+      padding: 0.85rem 2.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.83rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-radius: 3px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--pink);
+      color: var(--pink);
+    }
+
+    /* ========== HOME PAGE ========== */
+    .hero {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 50% at 50% 60%, rgba(232, 138, 182, 0.09) 0%, transparent 70%), radial-gradient(ellipse 40% 30% at 80% 20%, rgba(232, 93, 38, 0.06) 0%, transparent 60%);
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pink);
+      border: 1px solid rgba(232, 138, 182, 0.4);
+      padding: 0.32rem 1rem;
+      margin-bottom: 1.8rem;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.2rem, 9vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero h1 em {
+      color: var(--primary);
+      font-style: normal;
+    }
+
+    .hero p {
+      max-width: 500px;
+      font-size: 0.97rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 2.2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* FEATURED SERVICE BANNER */
+    .featured-banner {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 3rem;
+    }
+
+    .featured-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .featured-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 0.4rem;
+    }
+
+    .featured-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+
+    .featured-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .featured-badge {
+      background: rgba(232, 138, 182, 0.15);
+      border: 1px solid var(--pink);
+      padding: 0.5rem 1.2rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pink);
+      white-space: nowrap;
+    }
+
+    /* ABOUT SNIPPET */
+    .about-snippet {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-visual {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .about-visual::before {
+      content: '❝';
+      font-size: 4rem;
+      color: var(--pink);
+      opacity: 0.2;
+      position: absolute;
+      top: 0.5rem;
+      left: 1rem;
+      line-height: 1;
+    }
+
+    .about-quote {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      font-style: italic;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-author {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--pink);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .about-points {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .about-point {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .ap-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--pink);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* STATS */
+    .stats-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .stat-item {
+      flex: 1 1 180px;
+      text-align: center;
+      padding: 1.8rem 2rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--pink);
+      letter-spacing: 0.05em;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* ANNOUNCEMENTS */
+    .announce-section {
+      background: var(--bg2);
+      padding: 5rem 3rem;
+    }
+
+    .announce-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .announce-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .announce-item {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .announce-item:last-child {
+      border-bottom: none;
+    }
+
+    .announce-item:hover {
+      background: rgba(232, 138, 182, 0.04);
+    }
+
+    .ann-date {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--pink);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .ann-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      margin-right: 0.5rem;
+      border-radius: 2px;
+    }
+
+    .ann-badge.new {
+      background: var(--pink);
+      color: var(--dark);
+    }
+
+    .ann-badge.update {
+      background: rgba(232, 138, 182, 0.2);
+      color: var(--pink);
+    }
+
+    .ann-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .ann-desc {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* CAROUSEL */
+    .carousel-section {
+      background: var(--bg);
+      padding: 4rem 0;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 1.5rem;
+      animation: scrollLeft 25s linear infinite;
+      width: max-content;
+    }
+
+    .carousel-section:hover .carousel-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes scrollLeft {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .carousel-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    .cc-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .cc-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .cc-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ========== FEEDBACK PAGE ========== */
+    .reviews-hero {
+      background: var(--bg2);
+      padding: 4rem 3rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stars-summary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
+      flex-wrap: wrap;
+    }
+
+    .big-rating {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      color: var(--pink);
+      line-height: 1;
+    }
+
+    .rating-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .rating-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .rating-bar-wrap {
+      width: 120px;
+      height: 5px;
+      background: var(--bg4);
+      border-radius: 2px;
+    }
+
+    .rating-bar-fill {
+      height: 100%;
+      background: var(--pink);
+      border-radius: 2px;
+    }
+
+    .star-display {
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--pink);
+    }
+
+    .total-reviews {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* PINNED TESTIMONIAL */
+    .pinned-section {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .pinned-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pinned-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .pinned-card {
+      background: var(--bg2);
+      border: 1px solid var(--pink);
+      padding: 1.8rem;
+      position: relative;
+    }
+
+    .pin-icon {
+      position: absolute;
+      top: -10px;
+      left: 1.2rem;
+      background: var(--pink);
+      color: var(--dark);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+    }
+
+    .pin-stars {
+      color: var(--pink);
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pin-text {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .pin-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .pin-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(232, 138, 182, 0.2);
+      border: 1px solid var(--pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--pink);
+    }
+
+    .pin-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .pin-meta {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* REVIEWS GRID */
+    .reviews-section {
+      background: var(--bg2);
+      padding: 5rem 3rem;
+    }
+
+    .reviews-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .reviews-filter {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .rev-filter-btn {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .rev-filter-btn.active,
+    .rev-filter-btn:hover {
+      background: var(--pink);
+      color: var(--dark);
+      border-color: var(--pink);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .review-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+
+    .review-card:hover {
+      border-color: var(--pink);
+    }
+
+    .rc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+    }
+
+    .rc-stars {
+      color: var(--pink);
+      font-size: 0.85rem;
+    }
+
+    .rc-date {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    .rc-text {
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .rc-img {
+      width: 100%;
+      height: 100px;
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .rc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .rc-author {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .rc-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(232, 138, 182, 0.15);
+      border: 1px solid rgba(232, 138, 182, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--pink);
+    }
+
+    .rc-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .rc-anon {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* FEEDBACK FORM */
+    .feedback-form-section {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .feedback-form-section .inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+      border-color: var(--pink);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .star-picker {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+      margin-top: 0.3rem;
+    }
+
+    .star-picker span {
+      color: var(--bg4);
+      transition: color 0.15s;
+      user-select: none;
+    }
+
+    .star-picker span.lit {
+      color: var(--pink);
+    }
+
+    .photo-upload {
+      border: 1px dashed var(--border2);
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .photo-upload:hover {
+      border-color: var(--pink);
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .anon-check {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
+    .anon-check input {
+      accent-color: var(--pink);
+    }
+
+    /* ========== PROOFS PAGE ========== */
+    .proofs-hero {
+      background: var(--bg2);
+      padding: 4rem 3rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .proofs-section {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .proofs-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .proof-tabs {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      margin: 2rem 0;
+      overflow: hidden;
+    }
+
+    .proof-tab {
+      flex: 1;
+      padding: 0.9rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .proof-tab:last-child {
+      border-right: none;
+    }
+
+    .proof-tab.active,
+    .proof-tab:hover {
+      background: var(--pink);
+      color: var(--dark);
+    }
+
+    .proof-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .proof-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .proof-card:hover {
+      border-color: var(--pink);
+      transform: translateY(-3px);
+    }
+
+    .proof-img {
+      height: 160px;
+      background: var(--bg4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .proof-placeholder {
+      font-size: 2.5rem;
+      opacity: 0.4;
+    }
+
+    .proof-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26, 18, 32, 0.7);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .proof-body {
+      padding: 0.9rem;
+    }
+
+    .proof-cat {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--pink);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .proof-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .proof-date {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* BEFORE AFTER */
+    .before-after-section {
+      background: var(--bg2);
+      padding: 5rem 3rem;
+    }
+
+    .ba-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .ba-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .ba-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .ba-half {
+      height: 140px;
+      background: var(--bg4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .ba-half:first-child {
+      border-right: 2px solid var(--pink);
+    }
+
+    .ba-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+    }
+
+    .ba-tag.before {
+      background: rgba(138, 138, 154, 0.5);
+      color: var(--white);
+    }
+
+    .ba-tag.after {
+      background: var(--pink);
+      color: var(--dark);
+    }
+
+    .ba-body {
+      padding: 1rem;
+    }
+
+    .ba-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .ba-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ========== SERVICES PAGE ========== */
+    .services-hero {
+      background: var(--bg2);
+      padding: 4rem 3rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services-section {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .services-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      border-color: var(--pink);
+      background: var(--bg3);
+    }
+
+    .sc-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .sc-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    .sc-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .sc-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sc-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+    }
+
+    .sc-meta-label {
+      color: var(--text-muted);
+    }
+
+    .sc-meta-val {
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    /* ========== PROCESS PAGE ========== */
+    .process-hero {
+      background: var(--bg2);
+      padding: 4rem 3rem 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .process-section {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .process-section .inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--pink), transparent);
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      position: relative;
+    }
+
+    .step-num {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--bg3);
+      border: 2px solid var(--pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--pink);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-body {
+      padding-top: 0.5rem;
+      flex: 1;
+    }
+
+    .step-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 0.3rem;
+    }
+
+    .step-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* FAQ */
+    .faq-section {
+      background: var(--bg2);
+      padding: 5rem 3rem;
+    }
+
+    .faq-section .inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 0;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      gap: 1rem;
+    }
+
+    .faq-q .arrow {
+      color: var(--pink);
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .faq-q.open .arrow {
+      transform: rotate(180deg);
+    }
+
+    .faq-a {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s, padding 0.3s;
+    }
+
+    .faq-a.open {
+      max-height: 200px;
+      padding-bottom: 1.2rem;
+    }
+
+    /* WHY US */
+    .why-section {
+      background: var(--bg);
+      padding: 5rem 3rem;
+    }
+
+    .why-section .inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .why-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      transition: all 0.25s;
+    }
+
+    .why-card:hover {
+      border-color: var(--pink);
+    }
+
+    .why-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .why-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .why-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* PRIVACY NOTE */
+    .privacy-note {
+      background: rgba(232, 138, 182, 0.06);
+      border: 1px solid rgba(232, 138, 182, 0.25);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .privacy-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .privacy-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .privacy-text strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    /* ========== SHARED EXISTING SECTIONS ========== */
+    /* Events section kept from original */
+    .events-section {
+      background: var(--bg2);
+    }
+
+    .events-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .region-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .filter-btn {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid var(--border2);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--pink);
+      color: var(--dark);
+      border-color: var(--pink);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .event-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .event-card:hover {
+      border-color: var(--pink);
+      transform: translateY(-4px);
+    }
+
+    .event-img {
+      height: 150px;
+      position: relative;
+      background: var(--bg4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .event-img-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+    }
+
+    .event-genre {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.2rem 0.6rem;
+    }
+
+    .event-artist {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 1rem;
+      line-height: 1;
+    }
+
+    .event-body {
+      padding: 1rem;
+    }
+
+    .event-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.7rem;
+    }
+
+    .event-info h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+    }
+
+    .event-info p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .event-price {
+      text-align: right;
+    }
+
+    .price-from {
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .price-val {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--pink);
+    }
+
+    .event-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.7rem;
+      border-top: 1px solid rgba(249, 241, 247, 0.06);
+    }
+
+    .region-badge {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid rgba(200, 178, 200, 0.25);
+      padding: 0.18rem 0.55rem;
+    }
+
+    .ticket-btn {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--pink);
+      border: 1px solid var(--pink);
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .ticket-btn:hover {
+      background: var(--pink);
+      color: var(--dark);
+    }
+
+    /* FEATURES */
+    .features-section {
+      background: var(--bg);
+    }
+
+    .features-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .feature-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2rem;
+    }
+
+    .feature-tab {
+      padding: 1.2rem 1.4rem;
+      border-left: 2px solid rgba(249, 241, 247, 0.08);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .feature-tab.active {
+      border-left-color: var(--pink);
+      background: rgba(232, 138, 182, 0.04);
+    }
+
+    .feature-tab h4 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-tab p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .feature-display {
+      position: sticky;
+      top: 7rem;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      padding: 2.2rem;
+    }
+
+    .feature-icon {
+      width: 46px;
+      height: 46px;
+      background: rgba(232, 138, 182, 0.1);
+      border: 1px solid rgba(232, 138, 182, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.3rem;
+      font-size: 1.3rem;
+    }
+
+    .feature-display h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.7rem;
+    }
+
+    .feature-display p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .feature-perks {
+      margin-top: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .perk {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .perk-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--pink);
+      flex-shrink: 0;
+    }
+
+    /* SEAT MAP */
+    .seat-section {
+      background: var(--bg2);
+    }
+
+    .seat-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .seat-map {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      position: relative;
+    }
+
+    .stage-bar {
+      background: var(--pink);
+      color: var(--dark);
+      text-align: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.45rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .seat-zones {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .seat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .zone-label {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      width: 38px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .seats-row {
+      display: flex;
+      gap: 3px;
+      flex-wrap: wrap;
+    }
+
+    .seat {
+      width: 13px;
+      height: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .seat.vip {
+      background: var(--pink);
+    }
+
+    .seat.premium {
+      background: #4A7FBF;
+    }
+
+    .seat.standard {
+      background: #3A6A40;
+    }
+
+    .seat.taken {
+      background: var(--bg4);
+      cursor: not-allowed;
+    }
+
+    .seat.accessibility {
+      background: #8B4BAA;
+    }
+
+    .seat:not(.taken):hover {
+      transform: scale(1.5);
+    }
+
+    .seat-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(249, 241, 247, 0.06);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+    }
+
+    .pricing-tiers {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 1.3rem;
+    }
+
+    .tier {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+    }
+
+    .tier-left {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .tier-dot {
+      width: 11px;
+      height: 11px;
+    }
+
+    .tier-name {
+      font-size: 0.83rem;
+      font-weight: 600;
+    }
+
+    .tier-price {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--pink);
+    }
+
+    /* PAYMENT */
+    .payment-section {
+      background: var(--bg);
+    }
+
+    .payment-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-top: 1.8rem;
+    }
+
+    .pay-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .pay-card:hover {
+      border-color: rgba(232, 138, 182, 0.4);
+    }
+
+    .pay-icon {
+      font-size: 1.4rem;
+    }
+
+    .pay-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pay-type {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    .currency-strip {
+      margin-top: 1.8rem;
+      padding: 1.1rem 1.4rem;
+      background: rgba(232, 138, 182, 0.06);
+      border: 1px solid rgba(232, 138, 182, 0.2);
+    }
+
+    .currency-strip p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .currency-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .ctag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.18rem 0.5rem;
+      background: rgba(232, 138, 182, 0.1);
+      color: var(--pink);
+    }
+
+    .checkout-mock {
+      background: var(--bg3);
+      border: 1px solid rgba(232, 138, 182, 0.15);
+      padding: 1.8rem;
+    }
+
+    .checkout-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(249, 241, 247, 0.05);
+      font-size: 0.83rem;
+    }
+
+    .checkout-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .checkout-row .label {
+      color: var(--text-muted);
+    }
+
+    .checkout-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.9rem 0 0;
+      font-weight: 600;
+      border-top: 1px solid rgba(232, 138, 182, 0.2);
+    }
+
+    .checkout-total .val {
+      color: var(--pink);
+      font-size: 1.15rem;
+    }
+
+    .qr-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 1.3rem;
+      padding: 0.85rem;
+      background: rgba(232, 138, 182, 0.06);
+      border: 1px solid rgba(232, 138, 182, 0.2);
+    }
+
+    .qr-icon {
+      font-size: 1.8rem;
+    }
+
+    .qr-text {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .qr-text strong {
+      color: var(--text);
+      display: block;
+      font-size: 0.82rem;
+      margin-bottom: 0.1rem;
+    }
+
+    /* REGIONS */
+    .regions-section {
+      background: var(--bg2);
+    }
+
+    .regions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 0;
+      margin-top: 2.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .region-card {
+      padding: 1.6rem 1.2rem;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .region-card:hover {
+      background: rgba(232, 138, 182, 0.06);
+    }
+
+    .region-flag {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .region-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .region-count {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+    }
+
+    /* ACCOUNT */
+    .account-section {
+      background: var(--bg);
+    }
+
+    .account-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.3rem;
+      margin-top: 2.5rem;
+    }
+
+    .account-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      transition: all 0.25s;
+    }
+
+    .account-card:hover {
+      border-color: rgba(232, 138, 182, 0.3);
+    }
+
+    .ac-icon {
+      font-size: 1.7rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .account-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .account-card p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: space-between;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(249, 241, 247, 0.06);
+      margin-bottom: 1.8rem;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.12em;
+      color: var(--pink);
+    }
+
+    .footer-tagline {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      max-width: 230px;
+      line-height: 1.6;
+    }
+
+    .footer-col h5 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 0.9rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 0.45rem;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .footer-col a:hover {
+      color: var(--text);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .lang-select {
+      background: transparent;
+      border: 1px solid rgba(249, 241, 247, 0.15);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      padding: 0.28rem 0.55rem;
+      cursor: pointer;
+    }
+
+    /* FLOATING ELEMENTS */
+    .scroll-top {
+      position: fixed;
+      bottom: 6rem;
+      right: 1.5rem;
+      z-index: 150;
+      width: 42px;
+      height: 42px;
+      background: var(--pink);
+      color: var(--dark);
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      border-radius: 50%;
+    }
+
+    .scroll-top.show {
+      display: flex;
+    }
+
+    .scroll-top:hover {
+      background: var(--pink-light);
+      transform: translateY(-2px);
+    }
+
+    .visitor-badge {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 150;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.9rem;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    .visitor-badge span {
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    .float-contact {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+
+    .float-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      border-radius: 25px;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+
+    .float-messenger {
+      background: #0084FF;
+      color: #fff;
+    }
+
+    .float-telegram {
+      background: #229ED9;
+      color: #fff;
+    }
+
+    .float-main {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--pink);
+      color: var(--dark);
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(232, 138, 182, 0.4);
+    }
+
+    .float-main:hover {
+      background: var(--pink-light);
+    }
+
+    .float-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+      margin-bottom: 0.4rem;
+    }
+
+    .float-menu.open {
+      display: flex;
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 0.9rem 1.2rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-btn {
+        display: none;
+      }
+
+      .logo-img {
+        height: 30px;
+      }
+
+      .nav-right {
+        gap: 0.5rem;
+      }
+
+      section {
+        padding: 3.5rem 1.5rem;
+      }
+
+      .about-grid,
+      .features-layout,
+      .seat-layout,
+      .payment-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-display {
+        position: static;
+      }
+
+      .pinned-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo" onclick="navigate('home')" style="cursor:pointer;">
+      <img src="image/logo.jpg" alt="Daegu Assistance" class="logo-img">
+      <span style="vertical-align:middle;">DAEGU<span> ASSISTANCE</span></span>
+    </div>
+    <div class="nav-links">
+      <a onclick="navigate('home')" data-page="home">Home</a>
+      <a onclick="navigate('events')" data-page="events">Events</a>
+      <a onclick="navigate('services')" data-page="services">Services</a>
+      <a onclick="navigate('proofs')" data-page="proofs">Proofs</a>
+      <a onclick="navigate('reviews')" data-page="reviews">Reviews</a>
+      <a onclick="navigate('process')" data-page="process">Process</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-toggle" onclick="toggleMobileNav()" title="Open menu">☰</button>
+      <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+      <button class="theme-btn" onclick="openSearch()">🔍</button>
+      <button class="nav-btn" onclick="navigate('events')">Get Tickets</button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav" onclick="toggleMobileNav()">
+    <div class="mobile-nav-inner" onclick="event.stopPropagation()">
+      <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+      <div class="mobile-nav-links">
+        <a onclick="navigate('home'); toggleMobileNav();" data-page="home">Home</a>
+        <a onclick="navigate('events'); toggleMobileNav();" data-page="events">Events</a>
+        <a onclick="navigate('services'); toggleMobileNav();" data-page="services">Services</a>
+        <a onclick="navigate('proofs'); toggleMobileNav();" data-page="proofs">Proofs</a>
+        <a onclick="navigate('reviews'); toggleMobileNav();" data-page="reviews">Reviews</a>
+        <a onclick="navigate('process'); toggleMobileNav();" data-page="process">Process</a>
+      </div>
+      <div class="mobile-actions">
+        <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙 Toggle Theme</button>
+        <button class="theme-btn" onclick="openSearch()" title="Search">🔍 Search</button>
+        <button class="nav-btn" onclick="navigate('events'); toggleMobileNav()">Get Tickets</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+    <div class="search-box" onclick="event.stopPropagation()">
+      <div class="search-input-wrap">
+        <input type="text" id="searchInput" placeholder="Search events, services, FAQs..."
+          oninput="doSearch(this.value)" autocomplete="off">
+        <button class="search-close" onclick="closeSearch()">✕</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- ==================== HOME PAGE ==================== -->
+  <div class="page active" id="page-home">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-tag">World-Class Concert Ticketing</div>
+      <h1>Your Pass To<br><em>Every Stage</em></h1>
+      <p>Seamless booking for concerts across Korea, Asia, Europe, and beyond. Real-time availability, instant QR
+        tickets, and multi-currency checkout.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="navigate('events')">Browse Concerts</button>
+        <button class="btn-outline" onclick="navigate('process')">How It Works</button>
+      </div>
+    </section>
+
+    <!-- FEATURED SERVICE -->
+    <div class="featured-banner">
+      <div class="featured-inner">
+        <div>
+          <div class="featured-label">⭐ Most Requested Service</div>
+          <div class="featured-title">K-POP Concert Assistance</div>
+          <div class="featured-desc">We handle everything — presale queuing, seat selection, payment coordination, and
+            QR ticket delivery. Trusted by thousands of fans across 9 regions.</div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+          <div class="featured-badge">🔥 Limited Slots</div>
+          <button class="btn-primary" onclick="navigate('services')">View Service</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT SNIPPET -->
+    <section class="about-snippet">
+      <div class="about-grid">
+        <div>
+          <div class="section-tag">About the Assistance</div>
+          <div class="section-title">We Get You<br>In The Room</div>
+          <p class="section-sub">Daegu Assistance is a trusted concert ticketing and fan support service helping K-POP
+            fans worldwide secure their dream concert experiences — safely, efficiently, and stress-free.</p>
+          <div class="about-points">
+            <div class="about-point">
+              <div class="ap-dot"></div>Founded by fans who understand the rush of presales and sold-out shows
+            </div>
+            <div class="about-point">
+              <div class="ap-dot"></div>100% confidential — your personal data is never shared with third parties
+            </div>
+            <div class="about-point">
+              <div class="ap-dot"></div>Verified track record with photo proofs for every completed transaction
+            </div>
+            <div class="about-point">
+              <div class="ap-dot"></div>Available in 5 languages with regional support teams
+            </div>
+          </div>
+          <button class="btn-primary" style="margin-top:1.8rem;" onclick="navigate('process')">Learn More</button>
+        </div>
+        <div class="about-visual">
+          <p class="about-quote">"I've been using Daegu Assistance for every SEVENTEEN comeback tour since 2023. They've
+            never let me down — my tickets are always secured before general sale even opens."</p>
+          <div class="about-author">— Ana R., Philippines · ⭐⭐⭐⭐⭐ Verified Client</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-strip">
+      <div class="stat-item">
+        <div class="stat-num" id="ctr-clients">0</div>
+        <div class="stat-label">Completed Clients</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" id="ctr-works">0</div>
+        <div class="stat-label">Completed Works</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Regions Covered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+
+    <!-- AUTO CAROUSEL -->
+    <div class="carousel-section">
+      <div class="carousel-track" id="carouselTrack"></div>
+    </div>
+
+    <!-- ANNOUNCEMENTS -->
+    <section class="announce-section">
+      <div class="inner">
+        <div class="section-tag">Latest Updates</div>
+        <div class="section-title">Announcements</div>
+        <div class="announce-grid">
+          <div class="announce-item">
+            <div class="ann-date">May 2026</div>
+            <div>
+              <div class="ann-title"><span class="ann-badge new">New</span>SEVENTEEN Dome Tour — Slots Now Open</div>
+              <div class="ann-desc">Assistance slots for the KSPO Dome Aug 15-17 shows are now accepting inquiries.
+                Secure your slot before they fill up.</div>
+            </div>
+          </div>
+          <div class="announce-item">
+            <div class="ann-date">Apr 2026</div>
+            <div>
+              <div class="ann-title"><span class="ann-badge update">Update</span>GCash & GrabPay Now Accepted</div>
+              <div class="ann-desc">We've expanded our payment options to include GCash and GrabPay for Philippine
+                clients. No extra fees.</div>
+            </div>
+          </div>
+          <div class="announce-item">
+            <div class="ann-date">Mar 2026</div>
+            <div>
+              <div class="ann-title"><span class="ann-badge new">New</span>aespa Paris & Singapore Dates Added</div>
+              <div class="ann-desc">Assistance now available for aespa's European and SG shows. Check the Events tab for
+                details.</div>
+            </div>
+          </div>
+          <div class="announce-item">
+            <div class="ann-date">Feb 2026</div>
+            <div>
+              <div class="ann-title"><span class="ann-badge update">Update</span>Response Time Improved to Under 2 Hours
+              </div>
+              <div class="ann-desc">We've added more team members to ensure all inquiries are responded to within 2
+                hours during operating hours.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== EVENTS PAGE ==================== -->
+  <div class="page" id="page-events">
+    <section class="events-section" style="padding-top:5rem;">
+      <div class="events-header">
+        <div>
+          <div class="section-tag">Upcoming Events</div>
+          <div class="section-title">Find Your<br>Concert</div>
+        </div>
+        <div>
+          <div class="region-filters" id="regionFilters">
+            <button class="filter-btn active" onclick="filterRegion(this,'all')">All</button>
+            <button class="filter-btn" onclick="filterRegion(this,'Korea')">Korea</button>
+            <button class="filter-btn" onclick="filterRegion(this,'PH')">Philippines</button>
+            <button class="filter-btn" onclick="filterRegion(this,'SG')">Singapore</button>
+            <button class="filter-btn" onclick="filterRegion(this,'Taiwan')">Taiwan</button>
+            <button class="filter-btn" onclick="filterRegion(this,'HK')">Hong Kong</button>
+            <button class="filter-btn" onclick="filterRegion(this,'Macau')">Macau</button>
+            <button class="filter-btn" onclick="filterRegion(this,'Europe')">Europe</button>
+            <button class="filter-btn" onclick="filterRegion(this,'America')">America</button>
+          </div>
+        </div>
+      </div>
+      <div class="events-grid" id="eventsGrid"></div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+      <div class="features-layout">
+        <div>
+          <div class="section-tag">Platform Features</div>
+          <div class="section-title">Built For<br>Music Fans</div>
+          <p class="section-sub">Every tool you need from discovery to the door, on any device, in any language.</p>
+          <div class="feature-tabs">
+            <div class="feature-tab active" onclick="setFeature(0,this)">
+              <h4>🎟 Seamless Booking</h4>
+              <p>Real-time availability with instant confirmation and QR-code tickets for fast venue entry.</p>
+            </div>
+            <div class="feature-tab" onclick="setFeature(1,this)">
+              <h4>📱 Mobile-First Design</h4>
+              <p>Optimized smartphone experience — buy, manage, and display tickets entirely from your phone.</p>
+            </div>
+            <div class="feature-tab" onclick="setFeature(2,this)">
+              <h4>🔒 AI Fraud Protection</h4>
+              <p>Machine-learning detection against scalping, fake tickets, and unauthorized resales.</p>
+            </div>
+            <div class="feature-tab" onclick="setFeature(3,this)">
+              <h4>🔄 Resale & Transfer</h4>
+              <p>Safely resell or gift tickets to friends entirely within the platform.</p>
+            </div>
+            <div class="feature-tab" onclick="setFeature(4,this)">
+              <h4>👥 Social & Group Booking</h4>
+              <p>Share events, invite friends, coordinate group purchases, and earn referral rewards.</p>
+            </div>
+          </div>
+        </div>
+        <div class="feature-display">
+          <div class="feature-icon" id="fIcon">🎟</div>
+          <h3 id="fTitle">Seamless Booking</h3>
+          <p id="fDesc">From discovery to door in under 60 seconds. Browse live availability, choose your seats on an
+            interactive map, and receive your QR ticket instantly.</p>
+          <div class="feature-perks" id="fPerks">
+            <div class="perk">
+              <div class="perk-dot"></div>Real-time seat availability refresh
+            </div>
+            <div class="perk">
+              <div class="perk-dot"></div>Instant QR code generation
+            </div>
+            <div class="perk">
+              <div class="perk-dot"></div>Apple Wallet & Google Wallet support
+            </div>
+            <div class="perk">
+              <div class="perk-dot"></div>Email + SMS confirmation
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEAT MAP -->
+    <section class="seat-section">
+      <div class="seat-layout">
+        <div class="seat-map">
+          <div class="stage-bar">Stage</div>
+          <div class="seat-zones" id="seatMap"></div>
+          <div class="seat-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--pink)"></div>VIP
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#4A7FBF"></div>Premium
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#3A6A40"></div>Standard
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:#8B4BAA"></div>Accessible
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background:var(--bg4)"></div>Taken
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="section-tag">Interactive Seating</div>
+          <h3 class="section-title">Pick Your<br>Perfect Spot</h3>
+          <p class="section-sub">Visual seat selection with clear pricing tiers, VIP sections, and accessible seating
+            clearly marked on every venue map.</p>
+          <div class="pricing-tiers">
+            <div class="tier">
+              <div class="tier-left">
+                <div class="tier-dot" style="background:var(--pink)"></div>
+                <div>
+                  <div class="tier-name">VIP</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted)">Front rows · Hospitality included</div>
+                </div>
+              </div>
+              <div class="tier-price">from ₱18,000</div>
+            </div>
+            <div class="tier">
+              <div class="tier-left">
+                <div class="tier-dot" style="background:#4A7FBF"></div>
+                <div>
+                  <div class="tier-name">Premium</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted)">Great sightlines · Priority entry</div>
+                </div>
+              </div>
+              <div class="tier-price">from ₱9,500</div>
+            </div>
+            <div class="tier">
+              <div class="tier-left">
+                <div class="tier-dot" style="background:#3A6A40"></div>
+                <div>
+                  <div class="tier-name">Standard</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted)">General admission · Best value</div>
+                </div>
+              </div>
+              <div class="tier-price">from ₱4,200</div>
+            </div>
+            <div class="tier">
+              <div class="tier-left">
+                <div class="tier-dot" style="background:#8B4BAA"></div>
+                <div>
+                  <div class="tier-name">Accessible</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted)">Wheelchair · Companion seats</div>
+                </div>
+              </div>
+              <div class="tier-price">from ₱3,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAYMENT -->
+    <section class="payment-section">
+      <div class="payment-layout">
+        <div>
+          <div class="section-tag">Payment</div>
+          <div class="section-title">Pay Your<br>Way</div>
+          <p class="section-sub">Cards, digital wallets, and local payment methods — all with bank-grade security.</p>
+          <div class="payment-methods">
+            <div class="pay-card">
+              <div class="pay-icon">💳</div>
+              <div>
+                <div class="pay-name">Credit Card</div>
+                <div class="pay-type">Visa · Mastercard · Amex</div>
+              </div>
+            </div>
+            <div class="pay-card">
+              <div class="pay-icon">🅿</div>
+              <div>
+                <div class="pay-name">PayPal</div>
+                <div class="pay-type">Buyer protection</div>
+              </div>
+            </div>
+            <div class="pay-card">
+              <div class="pay-icon">🍎</div>
+              <div>
+                <div class="pay-name">Apple Pay</div>
+                <div class="pay-type">Face ID checkout</div>
+              </div>
+            </div>
+            <div class="pay-card">
+              <div class="pay-icon">💚</div>
+              <div>
+                <div class="pay-name">GCash</div>
+                <div class="pay-type">Philippines local</div>
+              </div>
+            </div>
+            <div class="pay-card">
+              <div class="pay-icon">🔵</div>
+              <div>
+                <div class="pay-name">Alipay</div>
+                <div class="pay-type">Asia-wide support</div>
+              </div>
+            </div>
+            <div class="pay-card">
+              <div class="pay-icon">🪙</div>
+              <div>
+                <div class="pay-name">More...</div>
+                <div class="pay-type">WeChat Pay · GrabPay</div>
+              </div>
+            </div>
+          </div>
+          <div class="currency-strip">
+            <p>Supported currencies</p>
+            <div class="currency-tags"><span class="ctag">KRW</span><span class="ctag">PHP</span><span
+                class="ctag">SGD</span><span class="ctag">HKD</span><span class="ctag">TWD</span><span
+                class="ctag">MOP</span><span class="ctag">EUR</span><span class="ctag">USD</span><span
+                class="ctag">CNY</span></div>
+          </div>
+        </div>
+        <div class="checkout-mock">
+          <div
+            style="font-size:0.73rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--pink);margin-bottom:1.1rem;">
+            Order Summary</div>
+          <div class="checkout-row"><span class="label">Event</span><span>SEVENTEEN World Tour</span></div>
+          <div class="checkout-row"><span class="label">Venue</span><span>KSPO Dome, Seoul</span></div>
+          <div class="checkout-row"><span class="label">Date</span><span>Aug 15, 2026 · 7:00 PM KST</span></div>
+          <div class="checkout-row"><span class="label">Section</span><span>VIP Floor A · Row 3</span></div>
+          <div class="checkout-row"><span class="label">Qty</span><span>2 tickets</span></div>
+          <div class="checkout-row"><span class="label">Subtotal</span><span>₱36,000</span></div>
+          <div class="checkout-row"><span class="label">Service fee</span><span>₱2,160</span></div>
+          <div class="checkout-total"><span>Total</span><span class="val">₱38,160</span></div>
+          <div class="qr-hint">
+            <div class="qr-icon">⬛</div>
+            <div class="qr-text"><strong>QR Tickets Ready Instantly</strong>Tickets delivered immediately after payment.
+              No printing needed.</div>
+          </div>
+          <button class="btn-primary" style="width:100%;margin-top:1.1rem;">Complete Purchase</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGIONS -->
+    <section class="regions-section">
+      <div style="text-align:center;margin-bottom:0.5rem;">
+        <div class="section-tag" style="display:inline-block;">Global Coverage</div>
+        <div class="section-title">9 Regions, One Platform</div>
+        <p class="section-sub" style="margin:0 auto;text-align:center;">Time zone-adjusted schedules, local languages,
+          and regional payment methods.</p>
+      </div>
+      <div class="regions-grid">
+        <div class="region-card">
+          <div class="region-flag">🇰🇷</div>
+          <div class="region-name">Korea</div>
+          <div class="region-count">48 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇵🇭</div>
+          <div class="region-name">Philippines</div>
+          <div class="region-count">12 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇸🇬</div>
+          <div class="region-name">Singapore</div>
+          <div class="region-count">9 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇹🇼</div>
+          <div class="region-name">Taiwan</div>
+          <div class="region-count">11 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇭🇰</div>
+          <div class="region-name">Hong Kong</div>
+          <div class="region-count">7 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇲🇴</div>
+          <div class="region-name">Macau</div>
+          <div class="region-count">4 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇫🇷</div>
+          <div class="region-name">Paris / EU</div>
+          <div class="region-count">22 upcoming</div>
+        </div>
+        <div class="region-card">
+          <div class="region-flag">🇺🇸</div>
+          <div class="region-name">America</div>
+          <div class="region-count">35 upcoming</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCOUNT -->
+    <section class="account-section">
+      <div style="text-align:center;margin-bottom:0.5rem;">
+        <div class="section-tag" style="display:inline-block;">Your Account</div>
+        <div class="section-title">Everything Personalized</div>
+      </div>
+      <div class="account-grid">
+        <div class="account-card">
+          <div class="ac-icon">🎯</div>
+          <h4>Smart Recommendations</h4>
+          <p>Get concert suggestions based on your listening history, past purchases, and favorite artists.</p>
+        </div>
+        <div class="account-card">
+          <div class="ac-icon">📋</div>
+          <h4>Purchase History</h4>
+          <p>View all past tickets, download receipts, and revisit your concert memories in one place.</p>
+        </div>
+        <div class="account-card">
+          <div class="ac-icon">⚡</div>
+          <h4>Early-Bird Alerts</h4>
+          <p>Get notified first when presales open for your watchlisted artists — before the public rush.</p>
+        </div>
+        <div class="account-card">
+          <div class="ac-icon">👥</div>
+          <h4>Group Bookings</h4>
+          <p>Coordinate with friends, split costs, and secure adjacent seats in a single group checkout flow.</p>
+        </div>
+        <div class="account-card">
+          <div class="ac-icon">🔄</div>
+          <h4>Safe Resale</h4>
+          <p>Can't make it? List your ticket for verified resale at a fair price directly inside the app.</p>
+        </div>
+        <div class="account-card">
+          <div class="ac-icon">🌐</div>
+          <h4>5 Languages</h4>
+          <p>Switch between English, Korean, Mandarin, French, and Tagalog at any time in your settings.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== REVIEWS PAGE ==================== -->
+  <div class="page" id="page-reviews">
+    <div class="reviews-hero">
+      <div class="section-tag" style="display:inline-block;">Client Feedback</div>
+      <div class="section-title">Reviews & Testimonials</div>
+      <div class="stars-summary">
+        <div class="big-rating">4.9</div>
+        <div>
+          <div class="star-display">★★★★★</div>
+          <div class="total-reviews" style="margin-top:0.4rem;">Based on 1,284 verified reviews</div>
+          <div class="rating-breakdown" style="margin-top:0.8rem;">
+            <div class="rating-bar-row">5★<div class="rating-bar-wrap">
+                <div class="rating-bar-fill" style="width:88%"></div>
+              </div>88%</div>
+            <div class="rating-bar-row">4★<div class="rating-bar-wrap">
+                <div class="rating-bar-fill" style="width:9%"></div>
+              </div>9%</div>
+            <div class="rating-bar-row">3★<div class="rating-bar-wrap">
+                <div class="rating-bar-fill" style="width:3%"></div>
+              </div>3%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PINNED -->
+    <section class="pinned-section">
+      <div class="inner">
+        <div class="section-tag">Featured Testimonials</div>
+        <div class="section-title">Pinned Reviews</div>
+        <div class="pinned-grid">
+          <div class="pinned-card">
+            <div class="pin-icon">📌 Featured</div>
+            <div class="pin-stars">★★★★★</div>
+            <p class="pin-text">"Secured my SEVENTEEN floor seat in under 3 minutes during presale. I was shaking the
+              whole time and they kept me updated every step. 100% will use again for every tour."</p>
+            <div class="pin-author">
+              <div class="pin-avatar">MR</div>
+              <div>
+                <div class="pin-name">Maria R.</div>
+                <div class="pin-meta">Philippines · May 2026 · VIP Floor</div>
+              </div>
+            </div>
+          </div>
+          <div class="pinned-card">
+            <div class="pin-icon">📌 Featured</div>
+            <div class="pin-stars">★★★★★</div>
+            <p class="pin-text">"I was nervous about using an assistance service for the first time but everything was
+              transparent. Got photos of the booking process and my QR arrived instantly. Game changer."</p>
+            <div class="pin-author">
+              <div class="pin-avatar">SL</div>
+              <div>
+                <div class="pin-name">Sara L.</div>
+                <div class="pin-meta">Singapore · April 2026 · Premium</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS GRID -->
+    <section class="reviews-section">
+      <div class="inner">
+        <div class="section-tag">All Reviews</div>
+        <div class="section-title">What Clients Say</div>
+        <div class="reviews-filter">
+          <button class="rev-filter-btn active" onclick="filterReviews(this,'all')">All ★</button>
+          <button class="rev-filter-btn" onclick="filterReviews(this,5)">5 Stars</button>
+          <button class="rev-filter-btn" onclick="filterReviews(this,4)">4 Stars</button>
+          <button class="rev-filter-btn" onclick="filterReviews(this,'photo')">With Photos</button>
+        </div>
+        <div class="reviews-grid" id="reviewsGrid"></div>
+      </div>
+    </section>
+
+    <!-- FEEDBACK FORM -->
+    <section class="feedback-form-section">
+      <div class="inner">
+        <div class="section-tag">Leave a Review</div>
+        <div class="section-title">Share Your Experience</div>
+        <p class="section-sub" style="margin-bottom:2.5rem;">Your feedback helps us improve and helps other fans trust
+          the process.</p>
+
+        <div class="form-group">
+          <label class="form-label">Your Rating</label>
+          <div class="star-picker" id="starPicker">
+            <span onclick="setStars(1)">★</span>
+            <span onclick="setStars(2)">★</span>
+            <span onclick="setStars(3)">★</span>
+            <span onclick="setStars(4)">★</span>
+            <span onclick="setStars(5)">★</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Name (optional if anonymous)</label>
+          <input class="form-input" type="text" placeholder="Your name or nickname" id="reviewName">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Region</label>
+          <select class="form-select" id="reviewRegion">
+            <option>Philippines</option>
+            <option>Korea</option>
+            <option>Singapore</option>
+            <option>Taiwan</option>
+            <option>Hong Kong</option>
+            <option>Macau</option>
+            <option>Europe</option>
+            <option>America</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Review</label>
+          <textarea class="form-textarea"
+            placeholder="Tell us about your experience — what service did you use, how was the process?"
+            id="reviewText"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Upload Photo (optional)</label>
+          <div class="photo-upload" onclick="document.getElementById('photoFile').click()">
+            <div class="upload-icon">📷</div>
+            <div>Click to upload a photo of your ticket or experience</div>
+            <div style="font-size:0.7rem;margin-top:0.3rem;color:var(--text-muted)">JPG, PNG up to 5MB</div>
+          </div>
+          <input type="file" id="photoFile" style="display:none" accept="image/*">
+        </div>
+        <div class="anon-check">
+          <input type="checkbox" id="anonCheck">
+          <label for="anonCheck">Submit anonymously — your name won't be shown publicly</label>
+        </div>
+        <button class="btn-primary" style="margin-top:2rem;width:100%;" onclick="submitReview()">Submit Review</button>
+        <div id="reviewSuccess"
+          style="display:none;margin-top:1rem;padding:1rem;background:rgba(232,138,182,0.1);border:1px solid var(--pink);font-size:0.85rem;text-align:center;color:var(--pink);">
+          ✅ Thank you! Your review has been submitted for verification.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== PROOFS PAGE ==================== -->
+  <div class="page" id="page-proofs">
+    <div class="proofs-hero">
+      <div class="section-tag" style="display:inline-block;">Verified Proofs</div>
+      <div class="section-title">See The Results</div>
+      <p class="section-sub" style="margin:0.5rem auto;text-align:center;">Every transaction is documented. Browse real
+        proofs from completed assistance cases.</p>
+    </div>
+
+    <section class="proofs-section">
+      <div class="inner">
+        <div class="section-tag">Proof Gallery</div>
+        <div class="section-title">Documented Results</div>
+        <div class="proof-tabs">
+          <button class="proof-tab active" onclick="filterProofs(this,'all')">All</button>
+          <button class="proof-tab" onclick="filterProofs(this,'feedback')">Client Feedbacks</button>
+          <button class="proof-tab" onclick="filterProofs(this,'transaction')">Transactions</button>
+          <button class="proof-tab" onclick="filterProofs(this,'result')">Completed Works</button>
+        </div>
+        <div class="proof-gallery" id="proofsGallery"></div>
+      </div>
+    </section>
+
+    <!-- BEFORE AFTER -->
+    <section class="before-after-section">
+      <div style="max-width:1100px;margin:0 auto;">
+        <div class="section-tag">Result Examples</div>
+        <div class="section-title">Before & After</div>
+        <p class="section-sub">Real outcomes from clients who were unable to secure tickets on their own.</p>
+        <div class="ba-grid">
+          <div class="ba-card">
+            <div class="ba-imgs">
+              <div class="ba-half"><span class="ba-tag before">Before</span><span
+                  style="font-size:2rem;opacity:0.3">😟</span></div>
+              <div class="ba-half"><span class="ba-tag after">After</span><span style="font-size:2rem">🎟</span></div>
+            </div>
+            <div class="ba-body">
+              <div class="ba-title">BLACKPINK Manila — No Ticket → VIP Floor</div>
+              <div class="ba-desc">Client had 3 failed attempts during public sale. We secured VIP floor seats 8 minutes
+                into presale.</div>
+            </div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-imgs">
+              <div class="ba-half"><span class="ba-tag before">Before</span><span
+                  style="font-size:2rem;opacity:0.3">🚫</span></div>
+              <div class="ba-half"><span class="ba-tag after">After</span><span style="font-size:2rem">✅</span></div>
+            </div>
+            <div class="ba-body">
+              <div class="ba-title">SEVENTEEN Seoul — Sold Out → Premium Secured</div>
+              <div class="ba-desc">Show was marked sold out on public sites. We found premium availability through
+                verified channels.</div>
+            </div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-imgs">
+              <div class="ba-half"><span class="ba-tag before">Before</span><span
+                  style="font-size:2rem;opacity:0.3">❌</span></div>
+              <div class="ba-half"><span class="ba-tag after">After</span><span style="font-size:2rem">🎉</span></div>
+            </div>
+            <div class="ba-body">
+              <div class="ba-title">aespa Paris — Region-Locked → Delivered</div>
+              <div class="ba-desc">International client unable to access French ticketing site. We navigated region
+                locks and confirmed 2 seats.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== SERVICES PAGE ==================== -->
+  <div class="page" id="page-services">
+    <div class="services-hero">
+      <div class="section-tag" style="display:inline-block;">What We Offer</div>
+      <div class="section-title">Our Services</div>
+      <p class="section-sub" style="margin:0.5rem auto;text-align:center;">Professional concert assistance tailored for
+        every type of fan and every kind of show.</p>
+    </div>
+
+    <section class="services-section">
+      <div class="inner">
+        <div class="services-grid" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <!-- DYNAMIC PRICING NOTE -->
+    <section style="background:var(--bg2);padding:4rem 3rem;">
+      <div style="max-width:900px;margin:0 auto;">
+        <div class="section-tag">Pricing Info</div>
+        <div class="section-title">Dynamic Pricing</div>
+        <p class="section-sub" style="margin-bottom:2rem;">Our service fees are adjusted based on demand, urgency, and
+          ticket tier. Here's what to expect:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+          <div style="background:var(--bg3);border:1px solid var(--border);padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.5rem;">🌅</div>
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.4rem;">Early-Bird</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6;">Book 2+ weeks before the show.
+              Lowest service fee, more seat options available.</div>
+            <div style="color:var(--pink);font-weight:600;margin-top:0.75rem;font-size:0.9rem;">–15% off standard rate
+            </div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--pink);padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.5rem;">⭐</div>
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.4rem;">Standard</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6;">Typical assistance request within a
+              normal timeframe. Our base pricing applies.</div>
+            <div style="color:var(--pink);font-weight:600;margin-top:0.75rem;font-size:0.9rem;">Standard rate</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.5rem;">⚡</div>
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.4rem;">Last-Minute</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6;">Requests within 48–72 hours of the
+              event. Premium rate for urgency and limited availability.</div>
+            <div style="color:var(--pink);font-weight:600;margin-top:0.75rem;font-size:0.9rem;">+20% rush fee</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);padding:1.5rem;">
+            <div style="font-size:1.5rem;margin-bottom:0.5rem;">👥</div>
+            <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.4rem;">Group Rate</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.6;">Groups of 4+ tickets booked
+              together. Discount applied automatically at checkout.</div>
+            <div style="color:var(--pink);font-weight:600;margin-top:0.75rem;font-size:0.9rem;">–10% per ticket</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== PROCESS PAGE ==================== -->
+  <div class="page" id="page-process">
+    <div class="process-hero">
+      <div class="section-tag" style="display:inline-block;">How It Works</div>
+      <div class="section-title">Process & Information</div>
+      <p class="section-sub" style="margin:0.5rem auto;text-align:center;">Simple, transparent, and stress-free from
+        inquiry to entry.</p>
+    </div>
+
+    <!-- TIMELINE -->
+    <section class="process-section">
+      <div class="inner">
+        <div class="section-tag">Step-by-Step</div>
+        <div class="section-title">Our Process</div>
+        <div class="timeline">
+          <div class="timeline-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-tag">Step 1</div>
+              <div class="step-title">Inquiry</div>
+              <div class="step-desc">Send us your event details — artist, date, venue, preferred section, and number of
+                tickets. We'll confirm availability and send you a quote within 2 hours.</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-tag">Step 2</div>
+              <div class="step-title">Confirmation</div>
+              <div class="step-desc">Once you agree to the quote and service fee, we confirm your slot. You'll receive a
+                booking reference and timeline for your specific event.</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-tag">Step 3</div>
+              <div class="step-title">Payment</div>
+              <div class="step-desc">Complete your payment via your preferred method. We accept GCash, PayPal, bank
+                transfer, and more. Receipts are sent immediately. Ticket payment and service fee are handled
+                separately.</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-tag">Step 4</div>
+              <div class="step-title">Assistance Starts</div>
+              <div class="step-desc">Our team queues for your tickets during presale or general admission. We send you
+                live updates and screenshots throughout the process so you're never left guessing.</div>
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-tag">Step 5</div>
+              <div class="step-title">Completion</div>
+              <div class="step-desc">Your QR-code ticket is delivered to your email and app. We send a final
+                proof-of-purchase screenshot and your booking summary. You're ready for the show!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIVACY NOTE -->
+    <section style="background:var(--bg2);padding:3rem 3rem;">
+      <div style="max-width:800px;margin:0 auto;">
+        <div class="privacy-note">
+          <div class="privacy-icon">🔒</div>
+          <div class="privacy-text">
+            <strong>Privacy & Confidentiality</strong>
+            Your personal information — name, contact details, and payment records — is never shared with third parties.
+            All data is handled in compliance with data privacy regulations. Communications are kept strictly between
+            you and our team. We do not store card numbers; all payments go through secure, encrypted gateways.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="inner">
+        <div class="section-tag">Questions</div>
+        <div class="section-title">FAQ</div>
+        <div id="faqContainer" style="margin-top:2rem;"></div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="why-section">
+      <div class="inner">
+        <div class="section-tag">Why Us</div>
+        <div class="section-title">Why Choose<br>Daegu Assistance</div>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-icon">🏆</div>
+            <h4>Proven Track Record</h4>
+            <p>Over 2,400 completed transactions with verified photo proofs for every single case.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">⚡</div>
+            <h4>Fast Response</h4>
+            <p>Inquiries answered within 2 hours. During presales, our team is on standby 24 hours in advance.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🔒</div>
+            <h4>Secure & Private</h4>
+            <p>Your data stays with us — no sharing, no selling, no exposure. Full transparency throughout.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🌏</div>
+            <h4>9 Regions Covered</h4>
+            <p>From Seoul to Paris to Manila — we navigate regional ticketing sites that international fans can't
+              access.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">💬</div>
+            <h4>Live Updates</h4>
+            <p>We send real screenshots and status updates during the queuing process so you're always in the loop.</p>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">💗</div>
+            <h4>Fan-Run Service</h4>
+            <p>We're K-POP fans ourselves. We understand the urgency, the stakes, and what a concert means to you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">DAEGU ASSISTANCE</div>
+        <div class="footer-tagline">Your passport to the world's greatest concerts. Book, attend, repeat.</div>
+      </div>
+      <div class="footer-col">
+        <h5>Discover</h5>
+        <a onclick="navigate('events')">Browse Events</a>
+        <a onclick="navigate('services')">Services</a>
+        <a onclick="navigate('proofs')">Proof Gallery</a>
+        <a onclick="navigate('home')">Announcements</a>
+      </div>
+      <div class="footer-col">
+        <h5>Info</h5>
+        <a onclick="navigate('process')">How It Works</a>
+        <a onclick="navigate('process')">FAQ</a>
+        <a onclick="navigate('process')">Why Choose Us</a>
+        <a onclick="navigate('process')">Privacy Policy</a>
+      </div>
+      <div class="footer-col">
+        <h5>Feedback</h5>
+        <a onclick="navigate('reviews')">Read Reviews</a>
+        <a onclick="navigate('reviews')">Leave a Review</a>
+        <a onclick="navigate('proofs')">View Proofs</a>
+        <a>Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Daegu Assistance. All rights reserved.</span>
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <select class="lang-select">
+          <option>English</option>
+          <option>한국어</option>
+          <option>中文</option>
+          <option>Français</option>
+          <option>Filipino</option>
+        </select>
+        <span>Privacy · Terms</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING ELEMENTS -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <div class="visitor-badge">👥 Visitors today: <span id="visitorCount">1,284</span></div>
+  <div class="float-contact">
+    <div class="float-menu" id="floatMenu">
+      <a class="float-btn float-messenger" href="#">💬 Messenger</a>
+      <a class="float-btn float-telegram" href="#">✈ Telegram</a>
+    </div>
+    <button class="float-main" onclick="toggleFloatMenu()">💬</button>
+  </div>
+
+  <script>
+    // ---- NAVIGATION ----
+    function navigate(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.toggle('active', a.dataset.page === page);
+      });
+      closeMobileNav();
+      closeSearch();
+      const target = document.getElementById('page-' + page);
+      if (target) { target.classList.add('active'); window.scrollTo(0, 0); }
+    }
+
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    function closeMobileNav() {
+      document.getElementById('mobileNav').classList.remove('open');
+    }
+
+    // ---- THEME ----
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isLight = html.getAttribute('data-theme') === 'light';
+      html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+      document.querySelector('.theme-btn').textContent = isLight ? '🌙' : '☀️';
+    }
+
+    // ---- SEARCH ----
+    const searchData = [
+      { page: 'home', title: 'Home — About the Assistance', desc: 'Learn about Daegu Assistance and our featured services' },
+      { page: 'events', title: 'Events — Browse Concerts', desc: 'Find upcoming K-POP concerts across 9 regions' },
+      { page: 'events', title: 'Events — Seat Map', desc: 'Interactive seating with VIP, Premium, Standard and Accessible sections' },
+      { page: 'events', title: 'Events — Payment Methods', desc: 'GCash, PayPal, Apple Pay, Alipay, Credit Card and more' },
+      { page: 'services', title: 'Services — Concert Ticketing', desc: 'Professional presale queuing and ticket securing service' },
+      { page: 'services', title: 'Services — Group Booking', desc: 'Book for groups of 4+ with discounted service fees' },
+      { page: 'services', title: 'Services — Pricing', desc: 'Early-bird, standard, last-minute and group pricing tiers' },
+      { page: 'proofs', title: 'Proofs — Proof Gallery', desc: 'Verified photos of completed transactions and results' },
+      { page: 'proofs', title: 'Proofs — Before & After', desc: 'Real examples of tickets secured for clients' },
+      { page: 'reviews', title: 'Reviews — Client Testimonials', desc: '4.9 stars from 1,284 verified reviews' },
+      { page: 'reviews', title: 'Reviews — Submit Feedback', desc: 'Leave your own review and photo' },
+      { page: 'process', title: 'Process — How It Works', desc: '5-step timeline from inquiry to ticket delivery' },
+      { page: 'process', title: 'Process — FAQ', desc: 'Frequently asked questions about our service' },
+      { page: 'process', title: 'Process — Why Choose Us', desc: 'Proven track record, fast response, 9 regions covered' },
+      { page: 'process', title: 'Process — Privacy Policy', desc: 'Your data is never shared with third parties' },
+    ];
+    function openSearch() { document.getElementById('searchOverlay').classList.add('open'); document.getElementById('searchInput').focus(); }
+    function closeSearch(e) { if (!e || e.target === document.getElementById('searchOverlay')) { document.getElementById('searchOverlay').classList.remove('open'); document.getElementById('searchInput').value = ''; document.getElementById('searchResults').innerHTML = ''; } }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+    function doSearch(q) {
+      const res = document.getElementById('searchResults');
+      if (!q.trim()) { res.innerHTML = ''; return; }
+      const matches = searchData.filter(d => (d.title + d.desc).toLowerCase().includes(q.toLowerCase())).slice(0, 5);
+      res.innerHTML = matches.map(m => `<div class="search-result-item" onclick="navigate('${m.page}');closeSearch()"><div class="sr-page">${m.page}</div><div style="font-weight:600;font-size:0.85rem">${m.title}</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.2rem">${m.desc}</div></div>`).join('') || '<div style="padding:1rem;color:var(--text-muted);font-size:0.85rem">No results found.</div>';
+    }
+
+    // ---- EVENTS ----
+    const eventsData = [
+      { artist: "SEVENTEEN", venue: "KSPO Dome", city: "Seoul", date: "Aug 15, 2026", genre: "K-POP", region: "Korea", price: "₱9,500", colors: ["#C9A84C", "#8B6A1E"] },
+      { artist: "BLACKPINK", venue: "Mall of Asia Arena", city: "Manila", date: "Sep 3, 2026", genre: "K-POP", region: "PH", price: "₱5,800", colors: ["#E85D26", "#8B3510"] },
+      { artist: "aespa", venue: "Singapore Indoor Stadium", city: "Singapore", date: "Sep 20, 2026", genre: "K-POP", region: "SG", price: "SGD 198", colors: ["#4A7FBF", "#1C3F6A"] },
+      { artist: "BTS", venue: "Allegiant Stadium", city: "Las Vegas", date: "Oct 1, 2026", genre: "K-POP", region: "America", price: "USD 250", colors: ["#8B4BAA", "#4A2261"] },
+      { artist: "NewJeans", venue: "Taipei Arena", city: "Taipei", date: "Oct 14, 2026", genre: "K-POP", region: "Taiwan", price: "TWD 5,500", colors: ["#3A6A40", "#1C3C20"] },
+      { artist: "IVE", venue: "AsiaWorld-Expo", city: "Hong Kong", date: "Nov 2, 2026", genre: "K-POP", region: "HK", price: "HKD 1,200", colors: ["#C9A84C", "#7A6420"] },
+      { artist: "aespa", venue: "AccorHotels Arena", city: "Paris", date: "Nov 18, 2026", genre: "K-POP", region: "Europe", price: "EUR 120", colors: ["#E85D26", "#8B3510"] },
+      { artist: "STRAY KIDS", venue: "Cotai Arena", city: "Macau", date: "Dec 5, 2026", genre: "K-POP", region: "Macau", price: "MOP 980", colors: ["#4A7FBF", "#1C3F6A"] },
+    ];
+    function renderEvents(filter) {
+      const grid = document.getElementById('eventsGrid');
+      const filtered = filter === 'all' ? eventsData : eventsData.filter(e => e.region === filter);
+      grid.innerHTML = filtered.map(e => `<div class="event-card"><div class="event-img"><div class="event-img-bg" style="background:linear-gradient(135deg,${e.colors[0]}60,${e.colors[1]}80)"></div><div class="event-genre">${e.genre}</div><div class="event-artist">${e.artist}</div></div><div class="event-body"><div class="event-meta"><div class="event-info"><h4>${e.venue}</h4><p>${e.city} · ${e.date}</p></div><div class="event-price"><div class="price-from">from</div><div class="price-val">${e.price}</div></div></div><div class="event-footer"><span class="region-badge">${e.region}</span><button class="ticket-btn" onclick="navigate('services')">Book Tickets</button></div></div></div>`).join('');
+    }
+    function filterRegion(btn, region) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderEvents(region);
+    }
+    renderEvents('all');
+
+    // ---- SEAT MAP ----
+    const zones = [
+      { label: 'VIP', count: 18, taken: [2, 5, 11], type: 'vip' },
+      { label: 'VIP', count: 20, taken: [0, 7, 14], type: 'vip' },
+      { label: 'PRM', count: 24, taken: [3, 8, 15, 20], type: 'premium' },
+      { label: 'PRM', count: 26, taken: [1, 9, 16, 22], type: 'premium' },
+      { label: 'STD', count: 30, taken: [4, 10, 17, 23, 27], type: 'standard' },
+      { label: 'STD', count: 30, taken: [2, 11, 18, 24, 28], type: 'standard' },
+      { label: 'ACC', count: 8, taken: [3, 6], type: 'accessibility' },
+    ];
+    const seatMap = document.getElementById('seatMap');
+    zones.forEach(z => {
+      const row = document.createElement('div'); row.className = 'seat-row';
+      const lbl = document.createElement('div'); lbl.className = 'zone-label'; lbl.textContent = z.label;
+      const seatsDiv = document.createElement('div'); seatsDiv.className = 'seats-row';
+      for (let i = 0; i < z.count; i++) {
+        const s = document.createElement('div');
+        s.className = 'seat ' + (z.taken.includes(i) ? 'taken' : z.type);
+        seatsDiv.appendChild(s);
+      }
+      row.appendChild(lbl); row.appendChild(seatsDiv); seatMap.appendChild(row);
+    });
+
+    // ---- FEATURE TABS ----
+    const features = [
+      { icon: '🎟', title: 'Seamless Booking', desc: 'From discovery to door in under 60 seconds. Browse live availability, choose your seats on an interactive map, and receive your QR ticket instantly by email and in-app.', perks: ['Real-time seat availability refresh', 'Instant QR code generation', 'Apple Wallet & Google Wallet support', 'Email + SMS confirmation'] },
+      { icon: '📱', title: 'Mobile-First Design', desc: 'Designed smartphone-first because over 80% of ticket purchases happen on mobile. Every tap, swipe, and checkout flow is optimized for smaller screens with speed in mind.', perks: ['One-thumb navigation', 'Touch-friendly seat picker', 'Face/fingerprint payment', 'Offline QR ticket access'] },
+      { icon: '🔒', title: 'AI Fraud Protection', desc: 'Our machine-learning system monitors every transaction in real time, flagging scalpers, fake listings, and suspicious patterns.', perks: ['Scalper bot detection', 'Verified resale marketplace', 'Unique per-ticket QR hashes', '24/7 security monitoring'] },
+      { icon: '🔄', title: 'Resale & Transfer', desc: "Can't attend? Safely list your ticket at a capped fair price, or gift it directly to a friend — all within the platform.", perks: ['Price-capped resale market', 'Instant friend transfers', 'Seller identity verification', 'Buyer guarantee on all resales'] },
+      { icon: '👥', title: 'Social & Group Booking', desc: 'Plan concert nights with friends: share event pages, invite your group, and lock in adjacent seats together.', perks: ['Group invite links', 'Adjacent seat locking', 'Split payment between friends', 'Social share cards'] },
+    ];
+    function setFeature(idx, tab) {
+      document.querySelectorAll('.feature-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const f = features[idx];
+      document.getElementById('fIcon').textContent = f.icon;
+      document.getElementById('fTitle').textContent = f.title;
+      document.getElementById('fDesc').textContent = f.desc;
+      document.getElementById('fPerks').innerHTML = f.perks.map(p => `<div class="perk"><div class="perk-dot"></div>${p}</div>`).join('');
+    }
+
+    // ---- REVIEWS ----
+    const reviewsData = [
+      { stars: 5, text: "Got my SEVENTEEN pit ticket in 4 minutes flat. The live updates kept me calm throughout the whole presale.", author: "K.", region: "PH", date: "May 2026", hasPhoto: true },
+      { stars: 5, text: "Tried to get BTS tickets on my own and failed 3 times. Used Daegu Assistance and got premium seats first try.", author: "Anonymous", region: "America", date: "Apr 2026", hasPhoto: false },
+      { stars: 5, text: "Really professional service. They sent me screenshots every step and my ticket arrived exactly as described.", author: "J.L.", region: "SG", date: "Apr 2026", hasPhoto: true },
+      { stars: 4, text: "Great service overall. Took a bit longer than expected during the presale rush but they communicated well.", author: "M.T.", region: "Taiwan", date: "Mar 2026", hasPhoto: false },
+      { stars: 5, text: "Used them for aespa Paris and it was flawless. Navigated the French site for me — couldn't have done it myself.", author: "Anonymous", region: "Europe", date: "Mar 2026", hasPhoto: true },
+      { stars: 5, text: "Third time using Daegu Assistance and they never disappoint. Loyal customer forever!", author: "C.P.", region: "HK", date: "Feb 2026", hasPhoto: false },
+    ];
+    function renderReviews(filter) {
+      const grid = document.getElementById('reviewsGrid');
+      let filtered = reviewsData;
+      if (filter === 5 || filter === 4) filtered = reviewsData.filter(r => r.stars === filter);
+      else if (filter === 'photo') filtered = reviewsData.filter(r => r.hasPhoto);
+      grid.innerHTML = filtered.map(r => `<div class="review-card"><div class="rc-top"><div class="rc-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div><div class="rc-date">${r.date}</div></div>${r.hasPhoto ? `<div class="rc-img"><span style="font-size:2rem;opacity:0.3">📷</span></div>` : ''}<p class="rc-text">${r.text}</p><div class="rc-author"><div class="rc-avatar">${r.author[0]}</div><div><div class="rc-name">${r.author}</div><div class="rc-anon">${r.region} · Verified</div></div></div></div>`).join('');
+    }
+    function filterReviews(btn, filter) {
+      document.querySelectorAll('.rev-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderReviews(filter);
+    }
+    renderReviews('all');
+
+    // ---- STAR PICKER ----
+    let selectedStars = 0;
+    function setStars(n) {
+      selectedStars = n;
+      document.querySelectorAll('#starPicker span').forEach((s, i) => s.classList.toggle('lit', i < n));
+    }
+
+    // ---- SUBMIT REVIEW ----
+    function submitReview() {
+      document.getElementById('reviewSuccess').style.display = 'block';
+      setTimeout(() => document.getElementById('reviewSuccess').style.display = 'none', 4000);
+    }
+
+    // ---- PROOFS ----
+    const proofsData = [
+      { cat: 'feedback', icon: '💬', title: 'SEVENTEEN Manila Client', date: 'May 2026', label: '5★ Review' },
+      { cat: 'transaction', icon: '🧾', title: 'GCash Payment Receipt', date: 'May 2026', label: 'Confirmed' },
+      { cat: 'result', icon: '🎟', title: 'BTS Vegas — QR Ticket', date: 'Apr 2026', label: 'Delivered' },
+      { cat: 'feedback', icon: '💬', title: 'aespa SG Client', date: 'Apr 2026', label: '5★ Review' },
+      { cat: 'transaction', icon: '💸', title: 'PayPal Transfer Proof', date: 'Apr 2026', label: 'Confirmed' },
+      { cat: 'result', icon: '✅', title: 'BLACKPINK Manila — VIP', date: 'Mar 2026', label: 'Completed' },
+      { cat: 'feedback', icon: '💬', title: 'NewJeans Taipei Client', date: 'Mar 2026', label: '5★ Review' },
+      { cat: 'transaction', icon: '🧾', title: 'Bank Transfer Screenshot', date: 'Feb 2026', label: 'Verified' },
+      { cat: 'result', icon: '🎉', title: 'IVE HK — Premium Row 1', date: 'Feb 2026', label: 'Completed' },
+    ];
+    function renderProofs(cat) {
+      const gallery = document.getElementById('proofsGallery');
+      const filtered = cat === 'all' ? proofsData : proofsData.filter(p => p.cat === cat);
+      gallery.innerHTML = filtered.map(p => `<div class="proof-card"><div class="proof-img"><span class="proof-placeholder">${p.icon}</span><div class="proof-label">${p.label}</div></div><div class="proof-body"><div class="proof-cat">${p.cat}</div><div class="proof-title">${p.title}</div><div class="proof-date">${p.date}</div></div></div>`).join('');
+    }
+    function filterProofs(btn, cat) {
+      document.querySelectorAll('.proof-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProofs(cat);
+    }
+    renderProofs('all');
+
+    // ---- SERVICES ----
+    const servicesData = [
+      { icon: '🎟', name: 'Presale Queuing', desc: 'We queue during limited presales so you don\'t have to. Our team goes live 30 minutes before the window opens, maximizing your chances of securing preferred seats.', duration: '1–3 hours', price: '₱800–₱1,500' },
+      { icon: '💺', name: 'Seat Selection', desc: 'Tell us your preferred section, row, or specific seat numbers. We navigate interactive seat maps and secure the closest available match to your request.', duration: '30–60 min', price: '₱500–₱1,000' },
+      { icon: '👥', name: 'Group Booking', desc: 'Coordinating concert groups of 4 or more? We lock in adjacent seats in a single transaction — no more splitting up or scrambling for nearby seats.', duration: '1–2 hours', price: '₱400/ticket' },
+      { icon: '🌏', name: 'International Access', desc: 'Ticketing sites that block international IPs, require local accounts, or need local payment methods — we handle all of it. Available for KR, JP, FR, UK, US sites.', duration: 'Varies', price: '₱1,000–₱2,000' },
+      { icon: '🔄', name: 'Ticket Transfer', desc: 'Already have a ticket but need to send it to someone else? We handle the safe transfer or resale within verified platforms to avoid fraud.', duration: '1–24 hours', price: '₱300–₱600' },
+      { icon: '⚡', name: 'Last-Minute Assistance', desc: 'Show is tomorrow and you still don\'t have a ticket? We check resale platforms, verified channels, and fan networks to find remaining availability.', duration: 'ASAP', price: '₱1,500–₱3,000' },
+    ];
+    document.getElementById('servicesGrid').innerHTML = servicesData.map(s => `<div class="service-card"><div class="sc-icon">${s.icon}</div><div class="sc-name">${s.name}</div><p class="sc-desc">${s.desc}</p><div class="sc-meta"><div class="sc-meta-row"><span class="sc-meta-label">Est. Duration</span><span class="sc-meta-val">${s.duration}</span></div><div class="sc-meta-row"><span class="sc-meta-label">Service Fee</span><span class="sc-meta-val">${s.price}</span></div></div></div>`).join('');
+
+    // ---- FAQ ----
+    const faqs = [
+      { q: 'How do I start an inquiry?', a: 'Send us a message on Messenger or Telegram with your event details — artist, date, venue, and preferred section. We\'ll respond within 2 hours.' },
+      { q: 'Is my payment safe?', a: 'Yes. All payments go through secure, encrypted gateways. We never store card numbers, and transactions are protected by fraud detection systems.' },
+      { q: 'What if you can\'t get my ticket?', a: 'If we\'re unable to secure tickets during the assisted presale or general sale, a full refund of the service fee is issued within 24 hours.' },
+      { q: 'Do you need my account login?', a: 'No. We book tickets using our own verified accounts and transfer or deliver the QR ticket to you. Your personal accounts are never required.' },
+      { q: 'How do I receive my ticket?', a: 'QR-code tickets are delivered via email and in-app. You can also save them to Apple Wallet or Google Wallet for offline access at the venue.' },
+      { q: 'Can I request specific seats?', a: 'Yes! Let us know your row, section, or seat number preference and we\'ll do our best to match it during the booking process.' },
+      { q: 'Do you cover sold-out shows?', a: 'Sometimes. We monitor resale platforms and verified fan networks for sold-out events. Availability and pricing vary — ask us and we\'ll check.' },
+      { q: 'Is there a minimum order?', a: 'No minimum! Whether you need 1 ticket or 20, we\'re happy to assist. Group bookings of 4+ qualify for discounted service fees.' },
+    ];
+    document.getElementById('faqContainer').innerHTML = faqs.map((f, i) => `<div class="faq-item"><button class="faq-q" onclick="toggleFaq(${i},this)">${f.q}<span class="arrow">▾</span></button><div class="faq-a" id="faq-${i}">${f.a}</div></div>`).join('');
+    function toggleFaq(i, btn) {
+      const ans = document.getElementById('faq-' + i);
+      const isOpen = ans.classList.contains('open');
+      document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+      if (!isOpen) { ans.classList.add('open'); btn.classList.add('open'); }
+    }
+
+    // ---- CAROUSEL ----
+    const carouselItems = [
+      { icon: '🎤', title: 'SEVENTEEN World Tour', desc: 'Seoul · Aug 2026' },
+      { icon: '👑', title: 'BLACKPINK Born Pink', desc: 'Manila · Sep 2026' },
+      { icon: '🌟', title: 'aespa Synk Tour', desc: 'Singapore · Sep 2026' },
+      { icon: '💜', title: 'BTS World Tour', desc: 'Las Vegas · Oct 2026' },
+      { icon: '🐰', title: 'NewJeans Fan Meet', desc: 'Taipei · Oct 2026' },
+      { icon: '🦋', title: 'IVE Show What I Have', desc: 'Hong Kong · Nov 2026' },
+      { icon: '🗼', title: 'aespa Europe Leg', desc: 'Paris · Nov 2026' },
+      { icon: '🎸', title: 'STRAY KIDS MANIAC', desc: 'Macau · Dec 2026' },
+    ];
+    const track = document.getElementById('carouselTrack');
+    const doubled = [...carouselItems, ...carouselItems];
+    track.innerHTML = doubled.map(c => `<div class="carousel-card"><div class="cc-icon">${c.icon}</div><div class="cc-title">${c.title}</div><div class="cc-desc">${c.desc}</div></div>`).join('');
+
+    // ---- STATS COUNTER ANIMATION ----
+    function animateCount(el, target, suffix) {
+      let start = 0; const duration = 1500; const step = (target / duration) * 16;
+      const timer = setInterval(() => {
+        start += step;
+        if (start >= target) { el.textContent = target.toLocaleString() + suffix; clearInterval(timer); }
+        else el.textContent = Math.floor(start).toLocaleString() + suffix;
+      }, 16);
+    }
+    setTimeout(() => {
+      animateCount(document.getElementById('ctr-clients'), 2418, '+');
+      animateCount(document.getElementById('ctr-works'), 3104, '+');
+    }, 600);
+
+    // ---- VISITOR COUNT ----
+    const base = 1284;
+    document.getElementById('visitorCount').textContent = (base + Math.floor(Math.random() * 40)).toLocaleString();
+
+    // ---- SCROLL TO TOP ----
+    window.addEventListener('scroll', () => {
+      document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+    });
+
+    // ---- FLOAT MENU ----
+    function toggleFloatMenu() {
+      document.getElementById('floatMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.float-contact')) document.getElementById('floatMenu').classList.remove('open');
+    });
+  </script>
+</body>
+
+</html>
