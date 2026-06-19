@@ -190,7 +190,7 @@ function renderEvents(filter) {
   const grid = document.getElementById('eventsGrid');
   const list = filter === 'all' ? EVENTS : EVENTS.filter(e => e.region === filter);
   if (!list.length) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted)">No events found for this region yet. <span style="color:var(--pink);cursor:pointer" onclick="navigate(\'services\')">Request assistance</span> for any show.</div>'; return }
-  grid.innerHTML = list.map(e => `<div class="event-card" onclick='openEventModal(${JSON.stringify(e)})'><div class="event-img"><div class="event-img-bg" style="background:linear-gradient(135deg,${e.colors[0]}60,${e.colors[1]}80)"></div><div class="event-genre">${e.genre}</div><div class="event-artist">${e.artist}</div></div><div class="event-body"><div class="event-meta"><div class="event-info"><h4>${e.venue}</h4><p>${e.city} · ${e.date}</p></div><div class="event-price"><div class="price-from">from</div><div class="price-val">${e.price}</div></div></div><div class="event-footer"><span class="region-badge">${e.region}</span><button class="ticket-btn" onclick="event.stopPropagation();navigate('services')">Book Tickets</button></div></div></div>`).join('');
+  grid.innerHTML = list.map(e => `<div class="event-card" onclick='openEventModal(${JSON.stringify(e)})'><div class="event-img"><div class="event-img-bg" style="background:linear-gradient(135deg,${e.colors[0]}60,${e.colors[1]}80)"></div><div class="event-genre">${e.genre}</div><div class="event-artist">${e.artist}</div></div><div class="event-body"><div class="event-meta"><div class="event-info"><h4>${e.venue}</h4><p>${e.city} · ${e.date}</p></div><div class="event-price"><div class="price-from">from</div><div class="price-val">${e.price}</div></div></div><div class="event-footer"><span class="region-badge">${e.region}</span><button class="ticket-btn" onclick="event.stopPropagation();openReservation()">Book Tickets</button></div></div></div>`).join('');
 }
 function filterRegion(btn, region) {
   if (btn) { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active') }
@@ -371,3 +371,401 @@ window.addEventListener('scroll', () => document.getElementById('scrollTop').cla
 // ---- FLOAT MENU ----
 function toggleFloat() { document.getElementById('floatMenu').classList.toggle('open') }
 document.addEventListener('click', e => { if (!e.target.closest('.float-contact')) document.getElementById('floatMenu').classList.remove('open') });
+
+// ---- RESERVATION & PAYMENT ----
+let currentReservation = {};
+let currentPaymentMethod = 'gcash';
+
+// Initialize event dropdown
+function initEventDropdown() {
+  const select = document.getElementById('resEvent');
+  if (!select) return;
+  select.innerHTML = '<option value="">Choose an event...</option>' + 
+    EVENTS.map((e, i) => `<option value="${i}">${e.artist} - ${e.date} (${e.price})</option>`).join('');
+  
+  // Add event listener for real-time updates
+  select.addEventListener('change', updateReservationPreview);
+  
+  // Initialize with first event if available
+  if (EVENTS.length > 0 && select.value === '') {
+    select.value = '0';
+    updateReservationPreview();
+  }
+}
+
+function updateReservationPreview() {
+  const eventIdx = document.getElementById('resEvent').value;
+  const qty = document.getElementById('resQty').value || 1;
+  const section = document.getElementById('resSection').value;
+  
+  const previewContainer = document.getElementById('resPreview');
+  if (!previewContainer) return;
+  
+  if (!eventIdx || !section) {
+    previewContainer.innerHTML = '';
+    return;
+  }
+  
+  const event = EVENTS[eventIdx];
+  const sectionPrices = {
+    'VIP': 18000,
+    'Premium': 9500,
+    'Standard': 4200,
+    'Accessible': 3000
+  };
+  
+  const unitPrice = sectionPrices[section] || 5000;
+  const subtotal = unitPrice * parseInt(qty);
+  const serviceFee = Math.ceil(subtotal * 0.05);
+  const total = subtotal + serviceFee;
+  
+  const sectionNames = {
+    'VIP': 'VIP Front Rows',
+    'Premium': 'Premium Sightlines',
+    'Standard': 'Standard General Admission',
+    'Accessible': 'Accessible (Wheelchair)'
+  };
+  
+  previewContainer.innerHTML = `
+    <div style="background:var(--bg2);padding:1.2rem;border-radius:0.4rem;border:1px solid var(--border);margin-top:1rem">
+      <div style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem">📋 Preview</div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.5rem">
+        <span style="color:var(--text-muted)">Event:</span>
+        <span style="color:var(--text);font-weight:600">${event.artist}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.5rem">
+        <span style="color:var(--text-muted)">Date:</span>
+        <span style="color:var(--text);font-weight:600">${event.date}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.5rem">
+        <span style="color:var(--text-muted)">Venue:</span>
+        <span style="color:var(--text);font-weight:600">${event.venue}, ${event.city}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.5rem">
+        <span style="color:var(--text-muted)">Section:</span>
+        <span style="color:var(--text);font-weight:600">${sectionNames[section]}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+        <span style="color:var(--text-muted)">Qty:</span>
+        <span style="color:var(--text);font-weight:600">${qty} ticket(s)</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.3rem">
+        <span style="color:var(--text-muted)">Subtotal:</span>
+        <span style="color:var(--text)">₱${subtotal.toLocaleString()}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:0.8rem">
+        <span style="color:var(--text-muted)">Service Fee:</span>
+        <span style="color:var(--text)">₱${serviceFee.toLocaleString()}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.9rem;font-weight:600;color:var(--pink)">
+        <span>Total:</span>
+        <span>₱${total.toLocaleString()}</span>
+      </div>
+    </div>
+  `;
+}
+
+// Add event listeners for quantity and section changes
+document.addEventListener('DOMContentLoaded', function() {
+  const qtyInput = document.getElementById('resQty');
+  const sectionSelect = document.getElementById('resSection');
+  
+  if (qtyInput) {
+    qtyInput.addEventListener('change', updateReservationPreview);
+    qtyInput.addEventListener('input', updateReservationPreview);
+  }
+  
+  if (sectionSelect) {
+    sectionSelect.addEventListener('change', updateReservationPreview);
+  }
+});
+
+function openReservation() {
+  initEventDropdown();
+  document.getElementById('reservationModal').classList.add('open');
+  currentReservation = {};
+}
+
+function closeReservation() {
+  document.getElementById('reservationModal').classList.remove('open');
+}
+
+function closePayment() {
+  document.getElementById('paymentModal').classList.remove('open');
+}
+
+function proceedToPayment() {
+  // Validate reservation form
+  const eventIdx = document.getElementById('resEvent').value;
+  const qty = document.getElementById('resQty').value;
+  const section = document.getElementById('resSection').value;
+  const name = document.getElementById('resName').value.trim();
+  const email = document.getElementById('resEmail').value.trim();
+  const phone = document.getElementById('resPhone').value.trim();
+
+  if (!eventIdx) { toast('🎟 Please select an event'); return }
+  if (!qty || qty < 1) { toast('📊 Please enter valid quantity'); return }
+  if (!section) { toast('💺 Please select a section'); return }
+  if (!name) { toast('👤 Please enter your name'); return }
+  if (!email || !email.includes('@')) { toast('📧 Please enter valid email'); return }
+  if (!phone) { toast('📱 Please enter your phone number'); return }
+
+  // Store reservation data
+  const event = EVENTS[eventIdx];
+  currentReservation = {
+    eventIdx,
+    event,
+    qty: parseInt(qty),
+    section,
+    name,
+    email,
+    phone,
+    requests: document.getElementById('resRequests').value.trim(),
+    basePrice: event.price,
+    timestamp: new Date().toISOString()
+  };
+
+  // Calculate price (simplified)
+  const sectionPrices = {
+    'VIP': 18000,
+    'Premium': 9500,
+    'Standard': 4200,
+    'Accessible': 3000
+  };
+  const unitPrice = sectionPrices[section] || 5000;
+  const subtotal = unitPrice * currentReservation.qty;
+  const serviceFee = Math.ceil(subtotal * 0.05); // 5% service fee
+  currentReservation.subtotal = subtotal;
+  currentReservation.serviceFee = serviceFee;
+  currentReservation.total = subtotal + serviceFee;
+
+  // Close reservation and open payment
+  closeReservation();
+  openPaymentModal();
+}
+
+function openPaymentModal() {
+  // Show payment summary
+  const summary = `
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Event:</span>
+      <span class="payment-summary-val">${currentReservation.event.artist}</span>
+    </div>
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Date:</span>
+      <span class="payment-summary-val">${currentReservation.event.date}</span>
+    </div>
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Section:</span>
+      <span class="payment-summary-val">${currentReservation.section}</span>
+    </div>
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Quantity:</span>
+      <span class="payment-summary-val">${currentReservation.qty} ticket(s)</span>
+    </div>
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Subtotal:</span>
+      <span class="payment-summary-val">₱${currentReservation.subtotal.toLocaleString()}</span>
+    </div>
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Service Fee (5%):</span>
+      <span class="payment-summary-val">₱${currentReservation.serviceFee.toLocaleString()}</span>
+    </div>
+    <div class="payment-summary-row">
+      <span class="payment-summary-label">Total Amount:</span>
+      <span class="payment-summary-val" style="font-size:1rem;font-weight:700">₱${currentReservation.total.toLocaleString()}</span>
+    </div>
+  `;
+  document.getElementById('paymentSummary').innerHTML = summary;
+  document.getElementById('paymentTitle').textContent = `Complete Payment - ₱${currentReservation.total.toLocaleString()}`;
+  
+  selectPaymentMethod(document.querySelector('.pay-method-card'), 'gcash');
+  document.getElementById('paymentModal').classList.add('open');
+}
+
+function selectPaymentMethod(card, method) {
+  document.querySelectorAll('.pay-method-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  currentPaymentMethod = method;
+  
+  const formContainer = document.getElementById('paymentMethodForm');
+  let formHTML = '';
+  
+  if (method === 'gcash') {
+    formHTML = `
+      <div class="payment-method-form-group">
+        <div class="form-group">
+          <label class="form-label">GCash Number</label>
+          <input class="form-input" type="text" id="gcashNum" placeholder="09xx xxx xxxx" required>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:1rem;line-height:1.6">
+          <strong style="color:var(--text)">📝 Instructions:</strong><br>
+          1. Send payment to our verified GCash: +63 917 XXXXXXX<br>
+          2. Screenshot your transaction reference<br>
+          3. Upload the screenshot in the field below<br>
+          4. We'll verify within 5 minutes
+        </div>
+        <div class="form-group" style="margin-top:1rem">
+          <label class="form-label">Upload Payment Proof</label>
+          <input class="form-input" type="text" id="gcashRef" placeholder="Transaction Reference" required>
+        </div>
+      </div>
+    `;
+  } else if (method === 'card') {
+    formHTML = `
+      <div class="payment-method-form-group">
+        <div class="form-group">
+          <label class="form-label">Cardholder Name</label>
+          <input class="form-input" type="text" id="cardName" placeholder="Full name on card" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <input class="form-input" type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input class="form-input" type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input class="form-input" type="text" id="cardCVV" placeholder="123" maxlength="3" required>
+          </div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:1rem">🔒 All card data is encrypted and secure. We never store card numbers.</div>
+      </div>
+    `;
+  } else if (method === 'paypal') {
+    formHTML = `
+      <div class="payment-method-form-group">
+        <div class="form-group">
+          <label class="form-label">PayPal Email</label>
+          <input class="form-input" type="email" id="paypalEmail" placeholder="you@paypal.com" required>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-top:1rem;line-height:1.6">
+          <strong style="color:var(--text)">✅ PayPal Benefits:</strong><br>
+          • Buyer protection included<br>
+          • Secure checkout with PayPal<br>
+          • No credit card needed
+        </div>
+      </div>
+    `;
+  } else if (method === 'bank') {
+    formHTML = `
+      <div class="payment-method-form-group">
+        <div style="font-size:0.85rem;line-height:1.8;color:var(--text-muted)">
+          <strong style="color:var(--text);display:block;margin-bottom:0.5rem">Bank Transfer Details:</strong>
+          <div>Bank: BDO / BPI / GCB</div>
+          <div>Account: Daegu Assistance Ltd</div>
+          <div>Account #: 1234567890</div>
+          <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+            <strong style="color:var(--text);display:block;margin-bottom:0.5rem">📝 Send Proof:</strong>
+            After transfer, upload your receipt below
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:1rem">
+          <label class="form-label">Transaction Reference</label>
+          <input class="form-input" type="text" id="bankRef" placeholder="Bank ref #" required>
+        </div>
+      </div>
+    `;
+  }
+  
+  formContainer.innerHTML = formHTML;
+}
+
+function completePayment() {
+  const confirmCheck = document.getElementById('paymentConfirm').checked;
+  if (!confirmCheck) {
+    toast('✅ Please confirm the terms and conditions');
+    return;
+  }
+
+  // Validate payment method fields
+  if (currentPaymentMethod === 'gcash') {
+    if (!document.getElementById('gcashRef')?.value) {
+      toast('📝 Please enter transaction reference');
+      return;
+    }
+  } else if (currentPaymentMethod === 'card') {
+    if (!document.getElementById('cardNumber')?.value || !document.getElementById('cardExpiry')?.value) {
+      toast('💳 Please fill in all card details');
+      return;
+    }
+  } else if (currentPaymentMethod === 'paypal') {
+    if (!document.getElementById('paypalEmail')?.value) {
+      toast('🅿️ Please enter your PayPal email');
+      return;
+    }
+  } else if (currentPaymentMethod === 'bank') {
+    if (!document.getElementById('bankRef')?.value) {
+      toast('🏦 Please enter transaction reference');
+      return;
+    }
+  }
+
+  // Save reservation to localStorage
+  const reservationId = 'RES-' + Date.now();
+  const reservationData = {
+    ...currentReservation,
+    paymentMethod: currentPaymentMethod,
+    reservationId,
+    status: 'Pending',
+    createdAt: new Date().toLocaleString()
+  };
+
+  // Get existing reservations
+  let reservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+  reservations.push(reservationData);
+  localStorage.setItem('reservations', JSON.stringify(reservations));
+
+  // Show success message
+  closePayment();
+  showReservationSuccess(reservationId);
+}
+
+function showReservationSuccess(reservationId) {
+  const modal = document.getElementById('modal');
+  openModal(
+    '✅ Booking Confirmed',
+    'Your Reservation is Pending',
+    `
+    <div class="reservation-success">
+      <div class="success-icon">🎉</div>
+      <p><strong>Reservation ID:</strong> ${reservationId}</p>
+      <p style="margin-top:1rem"><strong>${currentReservation.event.artist}</strong></p>
+      <p>${currentReservation.event.date}</p>
+      <p>${currentReservation.section} • ${currentReservation.qty} Ticket(s)</p>
+      <p style="margin-top:1.5rem;font-size:0.9rem">Total: <strong style="color:var(--pink);font-size:1.1rem">₱${currentReservation.total.toLocaleString()}</strong></p>
+    </div>
+    <p style="margin-top:1.5rem;text-align:center;color:var(--text-muted);font-size:0.85rem">
+      📧 A confirmation email has been sent to <strong>${currentReservation.email}</strong><br>
+      Our team will review your payment within 2 hours and confirm your booking.
+    </p>
+    `,
+    `
+    <div style="display:flex;gap:0.5rem;font-size:0.85rem;color:var(--text-muted);margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
+      <strong>Next Steps:</strong><br>
+      • Check your email for payment instructions<br>
+      • Complete payment by ${new Date(Date.now() + 24*60*60*1000).toLocaleDateString()}<br>
+      • Message us on Telegram for status updates
+    </div>
+    `,
+    `
+    <button class="btn-primary" onclick="closeModal();navigate('home')" style="flex:1">Return Home</button>
+    <button class="btn-outline" onclick="copyToClipboard('${reservationId}')" style="flex:1">Copy Reservation ID</button>
+    `
+  );
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text);
+  toast('📋 Reservation ID copied!');
+}
+
+// Show reservations in console (for demo)
+window.showReservations = function() {
+  const reservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+  console.table(reservations);
+  return reservations;
+};

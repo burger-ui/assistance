@@ -83,6 +83,104 @@
     </div>
   </div>
 
+  <!-- RESERVATION MODAL -->
+  <div class="modal-overlay" id="reservationModal" onclick="if(event.target===this)closeReservation()">
+    <div class="modal-box" style="max-width:500px">
+      <button class="modal-close" onclick="closeReservation()">✕</button>
+      <div class="modal-tag">Make a Reservation</div>
+      <div class="modal-title">Book Your Concert</div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Select Event</label>
+          <select class="form-select" id="resEvent" required>
+            <option value="">Choose an event...</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Number of Tickets</label>
+          <input class="form-input" type="number" id="resQty" value="1" min="1" max="10" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Section</label>
+          <select class="form-select" id="resSection" required>
+            <option value="">Choose a section...</option>
+            <option value="VIP">VIP Front Rows</option>
+            <option value="Premium">Premium Sightlines</option>
+            <option value="Standard">Standard General Admission</option>
+            <option value="Accessible">Accessible (Wheelchair)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input class="form-input" type="text" id="resName" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" id="resEmail" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" type="tel" id="resPhone" placeholder="+63 9xx xxx xxxx" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Special Requests (optional)</label>
+          <textarea class="form-textarea" id="resRequests" placeholder="Any special requests or notes..." style="height:80px"></textarea>
+        </div>
+        <div id="resPreview"></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="proceedToPayment()" style="flex:1">Continue to Payment →</button>
+        <button class="btn-outline" onclick="closeReservation()" style="flex:1">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL -->
+  <div class="modal-overlay" id="paymentModal" onclick="if(event.target===this)closePayment()">
+    <div class="modal-box" style="max-width:550px">
+      <button class="modal-close" onclick="closePayment()">✕</button>
+      <div class="modal-tag">Order Summary & Payment</div>
+      <div class="modal-title" id="paymentTitle">Complete Your Purchase</div>
+      <div class="modal-body">
+        <div id="paymentSummary" style="background:var(--bg3);padding:1.5rem;border-radius:0.5rem;margin-bottom:1.5rem;font-size:0.9rem">
+          <!-- Summary will be inserted here -->
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Method</label>
+          <div class="payment-method-grid">
+            <div class="pay-method-card active" onclick="selectPaymentMethod(this,'gcash')">
+              <div class="pm-icon">💸</div>
+              <div class="pm-name">GCash</div>
+            </div>
+            <div class="pay-method-card" onclick="selectPaymentMethod(this,'card')">
+              <div class="pm-icon">💳</div>
+              <div class="pm-name">Credit Card</div>
+            </div>
+            <div class="pay-method-card" onclick="selectPaymentMethod(this,'paypal')">
+              <div class="pm-icon">🅿️</div>
+              <div class="pm-name">PayPal</div>
+            </div>
+            <div class="pay-method-card" onclick="selectPaymentMethod(this,'bank')">
+              <div class="pm-icon">🏦</div>
+              <div class="pm-name">Bank Transfer</div>
+            </div>
+          </div>
+        </div>
+        <div id="paymentMethodForm">
+          <!-- Dynamic form fields based on payment method -->
+        </div>
+        <div class="form-group">
+          <input type="checkbox" id="paymentConfirm" required>
+          <label for="paymentConfirm" style="display:inline;font-size:0.85rem">I confirm this purchase and agree to our <span style="color:var(--pink);cursor:pointer" onclick="openLegal('Terms of Service','terms')">terms</span></label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="completePayment()" style="flex:1">Complete Payment</button>
+        <button class="btn-outline" onclick="closePayment()" style="flex:1">Back</button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
@@ -446,7 +544,7 @@
               No printing needed.</div>
           </div>
           <button class="btn-primary" style="width:100%;margin-top:1.1rem"
-            onclick="toast('📩 Message us on Messenger or Telegram to book!')">Complete Purchase</button>
+            onclick="openReservation()">Complete Purchase</button>
         </div>
       </div>
     </section>

@@ -2816,3 +2816,95 @@ footer {
     display: none
   }
 }
+
+/* PAYMENT & RESERVATION */
+.payment-method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.8rem
+}
+
+.pay-method-card {
+  background: var(--bg3);
+  border: 2px solid var(--border2);
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 0.4rem
+}
+
+.pay-method-card:hover {
+  border-color: var(--pink);
+  background: var(--bg4)
+}
+
+.pay-method-card.active {
+  border-color: var(--pink);
+  background: rgba(232, 138, 182, 0.1)
+}
+
+.pm-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem
+}
+
+.pm-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text)
+}
+
+.payment-method-form-group {
+  background: var(--bg3);
+  padding: 1.2rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--border);
+  margin-top: 1rem
+}
+
+.payment-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--border)
+}
+
+.payment-summary-row:last-child {
+  border-bottom: none;
+  padding-top: 1rem;
+  font-weight: 600;
+  color: var(--pink)
+}
+
+.payment-summary-label {
+  color: var(--text-muted)
+}
+
+.payment-summary-val {
+  color: var(--text)
+}
+
+.reservation-success {
+  background: rgba(88, 186, 145, 0.1);
+  border: 1px solid #5ABA91;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  color: #5ABA91;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.6
+}
+
+.reservation-success .success-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem
+}
+
+.modal-box {
+  max-height: 90vh;
+  overflow-y: auto
+}
